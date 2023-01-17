@@ -1,6 +1,14 @@
 async function FilePage(id: string) {
+  // const response = await fetch(
+  //   `https://jsonplaceholder.typicode.com/posts/${id}`,
+  //   {
+  //     next: {
+  //       revalidate: 10,
+  //     },
+  //   },
+  // );
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    `${process.env.NEXT_PUBLIC_URL}/api/sample/${id}`,
     {
       next: {
         revalidate: 10,
