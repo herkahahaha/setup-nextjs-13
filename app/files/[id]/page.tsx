@@ -19,12 +19,23 @@ async function FilePage(id: string) {
   return data;
 }
 
-export default async function generateStaticParams({ params }: any) {
-  const file = await FilePage(params.id);
-
+export default async function File({ params: { id } }: any) {
+  const dataStore = await FilePage(id);
   return (
-    <div className="">
-      <p>{file.body}</p>
-    </div>
+    <>
+      <p>{dataStore.body}</p>
+    </>
   );
+}
+
+export async function generateStaticParams() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/sample/`, {
+    next: {
+      revalidate: 10,
+    },
+  });
+  const data = await response.json();
+  return data.map((val: any) => ({
+    id: val.id.toString(),
+  }));
 }
